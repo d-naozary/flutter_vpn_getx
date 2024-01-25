@@ -166,7 +166,8 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 CustomWidget(
-                  titleText: homeController.vpnInfo.value.ping.isEmpty
+                  titleText: homeController.vpnInfo.value.ping.isEmpty ||
+                          homeController.vpnInfo.value.ping == null
                       ? "0 ms"
                       : "${homeController.vpnInfo.value.ping} ms",
                   subtitleText: "PING",
