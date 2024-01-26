@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_vpn/allModels/ip_info.dart';
 import 'package:flutter_vpn/allModels/vpn_info.dart';
 import 'package:flutter_vpn/appPreferences/appPreferences.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 
 class ApiVpnGate {
   static Future<List<VpnInfo>> retrieveAllAvailableFreeVpnSerevers() async {
@@ -16,6 +19,9 @@ class ApiVpnGate {
       final responseFromApi =
           await http.get(Uri.parse("http://www.vpngate.net/api/iphone/"));
       final csvString = responseFromApi.body.split("#")[1].replaceAll("*", "");
+      // final fileString =
+      //     await rootBundle.loadString("assets/flags/download.txt");
+      // final csvString = fileString.split("#")[1].replaceAll("*", "");
 
       List<List<dynamic>> listData = CsvToListConverter().convert(csvString);
 
@@ -31,7 +37,7 @@ class ApiVpnGate {
                 listData[counter][innerCounter].toString()
           });
         }
-        VpnInfo.fromJson(jsonData);
+        vpnServersList.add(VpnInfo.fromJson(jsonData));
       }
     } catch (e) {
       Get.snackbar("error", e.toString(),

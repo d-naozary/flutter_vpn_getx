@@ -23,10 +23,12 @@ class VpnInfo {
     hostName = jsonData["HostName"] ?? "";
     ip = jsonData["IP"] ?? "";
     ping = (jsonData["ping"] ?? 0).toString();
-    speed = jsonData["Speed"] ?? 0;
+    speed = (jsonData["Speed"] != null) ? int.parse(jsonData["Speed"]) : 0;
     countryLongName = jsonData["CountryLong"] ?? "";
     countryShortName = jsonData["CountryShort"] ?? "";
-    vpnSessionsNum = jsonData["NumVpnSessions"] ?? 0;
+    vpnSessionsNum = (jsonData["NumVpnSessions"] != null)
+        ? int.parse(jsonData["NumVpnSessions"])
+        : 0;
     base64OpenVpnConfigurationData =
         jsonData["OpenVPN_ConfigData_Base64"] ?? "";
   }

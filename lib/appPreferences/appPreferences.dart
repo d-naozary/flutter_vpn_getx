@@ -25,7 +25,7 @@ class AppPreferences {
   // for saving all vpn list details
   static List<VpnInfo> get vpnList {
     List<VpnInfo> tempVpnList = [];
-    final dataVpn = jsonDecode(boxOfData.get("vpnList") ?? []);
+    final dataVpn = jsonDecode(boxOfData.get("vpnList") ?? "[]");
 
     for (var data in dataVpn) {
       tempVpnList.add(VpnInfo.fromJson(data));

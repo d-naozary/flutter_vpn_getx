@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_vpn/allControllers/controller_home.dart';
 import 'package:flutter_vpn/allModels/vpn_status.dart';
 import 'package:flutter_vpn/allWidgets/custom_widget.dart';
+import 'package:flutter_vpn/allscreens/available_vpn_servers_location_screen.dart';
 import 'package:flutter_vpn/appPreferences/appPreferences.dart';
 import 'package:flutter_vpn/main.dart';
 import 'package:flutter_vpn/vpnEngine/vpn_engine.dart';
@@ -18,7 +19,9 @@ class HomeScreen extends StatelessWidget {
       child: Semantics(
         button: true,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Get.to(() => AvailableVpnServersLocationScreen());
+          },
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: sizeScreen.width * 0.041),
             color: Colors.redAccent,
@@ -115,7 +118,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    VpnEngine.snapshotVpnStage().listen((state) {
+      homeController.vpnConnectionState.value = state;
+    });
     sizeScreen = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Free VPN"),
